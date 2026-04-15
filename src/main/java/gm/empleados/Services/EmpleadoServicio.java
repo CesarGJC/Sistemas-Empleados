@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 
 import gm.empleados.models.Empleado;
 import gm.empleados.repository.EmpleadoRepositorio;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class EmpleadoServicio implements IEmpleadosServicio {
 
-    private EmpleadoRepositorio empleadoRepositorio;
+    private final EmpleadoRepositorio empleadoRepositorio;
 
     @Override
     public Empleado buscarEmpleado(Integer idEmpleado) {
