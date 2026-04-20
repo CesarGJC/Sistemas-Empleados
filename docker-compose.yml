@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  app-empleados:
+    build: .
+    ports:
+      - "8089:8089" # Mapeamos tu puerto personalizado
+    environment:
+      # AQUÍ ESTÁ EL TRUCO: Reemplazamos 'localhost' por 'db-postgres'
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-postgres:5432/empleados_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - db-postgres
+
+  db-postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin # Coincide con tus properties
+      POSTGRES_DB: empleados_db
+    ports:
+      - "5432:5432" # Sigue disponible para que te conectes con DBeaver/pgAdmin
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+volumes:
+  pg-data:
